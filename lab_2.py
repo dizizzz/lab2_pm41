@@ -126,3 +126,36 @@ for i, val in enumerate(s_rec):
 print("\nАналітичні відліки:")
 print(f"s(0) = {s_rec[0].real:.4f}")
 print(f"s(1) = {s_rec[1].real:.4f}")
+
+def analytic_s(n, C):
+    print("\nАналітичний вираз s(n·Tδ) при n =", n)
+    print("s(nTδ) = 1/8 * ( Σ Ck * (cos(2πkn/8) + j sin(2πkn/8)) )\n")
+
+    real_sum = 0
+    imag_sum = 0
+
+    for k in range(8):
+        theta = 2 * np.pi * k * n / 8
+
+        cos_t = np.cos(theta)
+        sin_t = np.sin(theta)
+
+        Ck = C[k]
+
+        print(
+            f"C[{k}] = {Ck.real:.4f} + {Ck.imag:.4f}j  →  "
+            f"(cos({theta:.4f}) + j sin({theta:.4f}))"
+        )
+
+        # Додаємо внески
+        real_sum += Ck.real * cos_t - Ck.imag * sin_t
+        imag_sum += Ck.real * sin_t + Ck.imag * cos_t
+
+    real_sum /= 8
+    imag_sum /= 8
+
+    print("\nОбчислене значення:")
+    print(f"s({n}) = {real_sum:.4f} + {imag_sum:.4f}j")
+    print()
+
+analytic_s(0.1, C2)
